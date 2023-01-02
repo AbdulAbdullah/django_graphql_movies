@@ -2,12 +2,10 @@ import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
 from .models import Actor, Movie
 
-# Create a GraphQL type for the actor model
 class ActorType(DjangoObjectType):
     class Meta:
         model = Actor
 
-# Create a GraphQL type for the movie model
 class MovieType(DjangoObjectType):
     class Meta:
         model = Movie
@@ -36,7 +34,6 @@ class Query(ObjectType):
         return Movie.objects.all()
     
     
-# Create Input Object Types
 class ActorInput(graphene.InputObjectType):
     id = graphene.ID()
     name = graphene.String()
@@ -47,7 +44,6 @@ class MovieInput(graphene.InputObjectType):
     actors = graphene.List(ActorInput)
     year = graphene.Int()
     
-# Create mutations for actors
 class CreateActor(graphene.Mutation):
     class Arguments:
         input = ActorInput(required=True)
@@ -80,7 +76,6 @@ class UpdateActor(graphene.Mutation):
             return UpdateActor(ok=ok, actor=actor_instance)
         return UpdateActor(ok=ok, actor=None)
     
-# Create mutations for movies
 class CreateMovie(graphene.Mutation):
     class Arguments:
         input = MovieInput(required=True)
